@@ -62,7 +62,7 @@ public class InterfaceInfo implements Serializable {
     /**
      * 创建人
      */
-    private Long userid;
+    private Long userId;
 
     /**
      * 创建时间

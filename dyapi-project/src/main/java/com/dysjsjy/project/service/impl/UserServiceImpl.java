@@ -18,6 +18,7 @@ import org.springframework.util.DigestUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import static com.dysjsjy.project.constant.UserConstant.ADMIN_ROLE;
 import static com.dysjsjy.project.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -106,6 +107,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // 3. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
         return user;
+    }
+
+    @Override
+    public boolean userLogout(HttpServletRequest request) {
+        if (request.getSession().getAttribute(USER_LOGIN_STATE) == null) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "未登录");
+        }
+        // 移除登录态
+        request.getSession().removeAttribute(USER_LOGIN_STATE);
+        return true;
+    }
+
+    @Override
+    public User getLoginUser(HttpServletRequest request) {
+        // 先判断是否已登录
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null || currentUser.getId() == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+        // 从数据库查询（追求性能的话可以注释，直接走缓存）
+        long userId = currentUser.getId();
+        currentUser = this.getById(userId);
+        if (currentUser == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+        return currentUser;
+    }
+
+    @Override
+    public boolean isAdmin(HttpServletRequest request) {
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User user = (User) userObj;
+        return user != null && ADMIN_ROLE.equals(user.getUserRole());
     }
 }
 

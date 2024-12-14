@@ -14,7 +14,7 @@
             <result property="responseHeader" column="responseHeader" jdbcType="VARCHAR"/>
             <result property="status" column="status" jdbcType="INTEGER"/>
             <result property="method" column="method" jdbcType="VARCHAR"/>
-            <result property="userid" column="userId" jdbcType="BIGINT"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
