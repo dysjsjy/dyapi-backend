@@ -12,17 +12,17 @@
             <result property="place" column="place" jdbcType="VARCHAR"/>
             <result property="job" column="job" jdbcType="VARCHAR"/>
             <result property="contact" column="contact" jdbcType="VARCHAR"/>
-            <result property="loveexp" column="loveExp" jdbcType="VARCHAR"/>
+            <result property="loveExp" column="loveExp" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="photo" column="photo" jdbcType="VARCHAR"/>
-            <result property="reviewstatus" column="reviewStatus" jdbcType="INTEGER"/>
-            <result property="reviewmessage" column="reviewMessage" jdbcType="VARCHAR"/>
-            <result property="viewnum" column="viewNum" jdbcType="INTEGER"/>
-            <result property="thumbnum" column="thumbNum" jdbcType="INTEGER"/>
-            <result property="userid" column="userId" jdbcType="BIGINT"/>
-            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
+            <result property="reviewStatus" column="reviewStatus" jdbcType="INTEGER"/>
+            <result property="reviewMessage" column="reviewMessage" jdbcType="VARCHAR"/>
+            <result property="viewNum" column="viewNum" jdbcType="INTEGER"/>
+            <result property="thumbNum" column="thumbNum" jdbcType="INTEGER"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">

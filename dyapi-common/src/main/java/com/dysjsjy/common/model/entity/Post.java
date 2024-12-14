@@ -1,9 +1,7 @@
 package com.dysjsjy.common.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -54,7 +52,7 @@ public class Post implements Serializable {
     /**
      * 感情经历
      */
-    private String loveexp;
+    private String loveExp;
 
     /**
      * 内容（个人介绍）
@@ -69,42 +67,43 @@ public class Post implements Serializable {
     /**
      * 状态（0-待审核, 1-通过, 2-拒绝）
      */
-    private Integer reviewstatus;
+    private Integer reviewStatus;
 
     /**
      * 审核信息
      */
-    private String reviewmessage;
+    private String reviewMessage;
 
     /**
      * 浏览数
      */
-    private Integer viewnum;
+    private Integer viewNum;
 
     /**
      * 点赞数
      */
-    private Integer thumbnum;
+    private Integer thumbNum;
 
     /**
      * 创建用户 id
      */
-    private Long userid;
+    private Long userId;
 
     /**
      * 创建时间
      */
-    private Date createtime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private Date updateTime;
 
     /**
      * 是否删除
      */
-    private Integer isdelete;
+    @TableLogic
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -1,9 +1,7 @@
 package com.dysjsjy.common.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -24,17 +22,17 @@ public class User implements Serializable {
     /**
      * 用户昵称
      */
-    private String username;
+    private String userName;
 
     /**
      * 账号
      */
-    private String useraccount;
+    private String userAccount;
 
     /**
      * 用户头像
      */
-    private String useravatar;
+    private String userAvatar;
 
     /**
      * 性别
@@ -44,37 +42,38 @@ public class User implements Serializable {
     /**
      * 用户角色：user / admin
      */
-    private String userrole;
+    private String userRole;
 
     /**
      * 密码
      */
-    private String userpassword;
+    private String userPassword;
 
     /**
      * accessKey
      */
-    private String accesskey;
+    private String accessKey;
 
     /**
      * secretKey
      */
-    private String secretkey;
+    private String secretKey;
 
     /**
      * 创建时间
      */
-    private Date createtime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private Date updateTime;
 
     /**
      * 是否删除
      */
-    private Integer isdelete;
+    @TableLogic
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
