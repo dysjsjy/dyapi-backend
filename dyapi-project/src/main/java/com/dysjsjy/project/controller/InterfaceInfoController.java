@@ -2,17 +2,21 @@ package com.dysjsjy.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dysjsjy.clientsdk.cilent.DyApiClient;
 import com.dysjsjy.common.model.entity.InterfaceInfo;
 import com.dysjsjy.common.model.entity.User;
+import com.dysjsjy.common.model.enums.InterfaceInfoStatusEnum;
 import com.dysjsjy.project.annotation.AuthCheck;
 import com.dysjsjy.project.common.*;
 import com.dysjsjy.project.constant.CommonConstant;
 import com.dysjsjy.project.exception.BusinessException;
 import com.dysjsjy.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.dysjsjy.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.dysjsjy.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.dysjsjy.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.dysjsjy.project.service.InterfaceInfoService;
 import com.dysjsjy.project.service.UserService;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -32,6 +36,9 @@ public class InterfaceInfoController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private DyApiClient dyApiClient;
 
     @PostMapping("/add")
     public BaseResponse<Long> addInterfaceInfo(@RequestBody InterfaceInfoAddRequest interfaceInfoAddRequest, HttpServletRequest request) {
@@ -160,19 +167,65 @@ public class InterfaceInfoController {
         if (oldInterfaceInfo == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-//        // 判断该接口是否可以调用
-//
-//        com.dysjsjy.clientsdk.model.User user = new com.dysjsjy.clientsdk.model.User();
-//        user.setUsername("test");
-//        String username = yuApiClient.getUsernameByPost(user);
-//        if (StringUtils.isBlank(username)) {
-//            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口验证失败");
-//        }
-//        // 仅本人或管理员可修改
-//        InterfaceInfo interfaceInfo = new InterfaceInfo();
-//        interfaceInfo.setId(id);
-//        interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
-//        boolean result = interfaceInfoService.updateById(interfaceInfo);
-//        return ResultUtils.success(result);
+        // 判断该接口是否可以调用
+        com.dysjsjy.clientsdk.model.User user = new com.dysjsjy.clientsdk.model.User();
+        user.setUsername("test");
+        String username = dyApiClient.getUsernameByPost(user);
+        if (StringUtils.isBlank(username)) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口验证失败");
+        }
+        // 仅本人或管理员可修改
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
+    }
+
+    @PostMapping("/offline")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
+                                                      HttpServletRequest request) {
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = idRequest.getId();
+        //判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        //仅本人或者管理员能修改
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
+    }
+
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                    HttpServletRequest request) {
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = interfaceInfoInvokeRequest.getId();
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        //判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已经关闭");
+        }
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        DyApiClient tempClient = new DyApiClient(accessKey, secretKey);
+        Gson gson = new Gson();
+        com.dysjsjy.clientsdk.model.User user = gson.fromJson(userRequestParams, com.dysjsjy.clientsdk.model.User.class);
+        String usernameByPost = tempClient.getUsernameByPost(user);
+        return ResultUtils.success(usernameByPost);
     }
 }
