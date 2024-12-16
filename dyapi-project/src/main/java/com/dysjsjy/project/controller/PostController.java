@@ -2,6 +2,7 @@ package com.dysjsjy.project.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dysjsjy.common.model.entity.Post;
 import com.dysjsjy.common.model.entity.User;
 import com.dysjsjy.project.annotation.AuthCheck;
@@ -9,6 +10,7 @@ import com.dysjsjy.project.common.BaseResponse;
 import com.dysjsjy.project.common.DeleteRequest;
 import com.dysjsjy.project.common.ErrorCode;
 import com.dysjsjy.project.common.ResultUtils;
+import com.dysjsjy.project.constant.CommonConstant;
 import com.dysjsjy.project.exception.BusinessException;
 import com.dysjsjy.project.model.dto.post.PostAddRequest;
 import com.dysjsjy.project.model.dto.post.PostQueryRequest;
@@ -16,6 +18,7 @@ import com.dysjsjy.project.model.dto.post.PostUpdateRequest;
 import com.dysjsjy.project.service.PostService;
 import com.dysjsjy.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -117,6 +120,31 @@ public class PostController {
         QueryWrapper<Post> queryWrapper = new QueryWrapper<>(postQuery);
         List<Post> postList = postService.list(queryWrapper);
         return ResultUtils.success(postList);
+    }
+
+    @GetMapping("/list/page")
+    public BaseResponse<Page<Post>> listPostByPage(PostQueryRequest postQueryRequest, HttpServletRequest request) {
+        if (postQueryRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Post postQuery = new Post();
+        BeanUtils.copyProperties(postQueryRequest, postQuery);
+        long current = postQueryRequest.getCurrent();
+        long size = postQueryRequest.getPageSize();
+        String sortField = postQueryRequest.getSortField();
+        String sortOrder = postQueryRequest.getSortOrder();
+        String content = postQuery.getContent();
+        //需要支持模糊搜索
+        postQuery.setContact(null);
+        //限制爬虫
+        if (size > 50) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        QueryWrapper<Post> queryWrapper = new QueryWrapper<>(postQuery);
+        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
+        queryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
+        Page<Post> postPage = postService.page(new Page<>(current, size), queryWrapper);
+        return ResultUtils.success(postPage);
     }
 
 }
