@@ -1,9 +1,7 @@
 package com.dysjsjy.common.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -39,17 +37,17 @@ public class InterfaceInfo implements Serializable {
     /**
      * 请求参数
      */
-    private String requestparams;
+    private String requestParams;
 
     /**
      * 请求头
      */
-    private String requestheader;
+    private String requestHeader;
 
     /**
      * 响应头
      */
-    private String responseheader;
+    private String responseHeader;
 
     /**
      * 接口状态（0-关闭，1-开启）
@@ -64,22 +62,23 @@ public class InterfaceInfo implements Serializable {
     /**
      * 创建人
      */
-    private Long userid;
+    private Long userId;
 
     /**
      * 创建时间
      */
-    private Date createtime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private Date updateTime;
 
     /**
      * 是否删除(0-未删, 1-已删)
      */
-    private Integer isdelete;
+    @TableLogic
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -14,17 +14,17 @@ public class UserVO {
     /**
      * 用户昵称
      */
-    private String username;
+    private String userName;
 
     /**
      * 账号
      */
-    private String useraccount;
+    private String userAccount;
 
     /**
      * 用户头像
      */
-    private String useravatar;
+    private String userAvatar;
 
     /**
      * 性别
@@ -34,17 +34,17 @@ public class UserVO {
     /**
      * 用户角色：user / admin
      */
-    private String userrole;
+    private String userRole;
 
     /**
      * 创建时间
      */
-    private Date createtime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 }

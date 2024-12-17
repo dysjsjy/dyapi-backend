@@ -17,6 +17,7 @@
     <modules>
         <module>dyapi-project</module>
         <module>dyapi-common</module>
+        <module>dyapi-client-sdk</module>
     </modules>
 
     <properties>
