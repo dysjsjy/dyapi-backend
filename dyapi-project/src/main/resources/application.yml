@@ -20,7 +20,7 @@ server:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
@@ -32,3 +32,17 @@ logging:
     com.dysjsjy.project: debug
 
 #debug: true
+dyapi:
+  client:
+    access-key: dyapi
+    secret-key: abcdefgh
+dubbo:
+  application:
+    name: dubbo-springboot-demo-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848
+
