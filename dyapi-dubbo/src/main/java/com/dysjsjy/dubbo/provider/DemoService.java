@@ -1,4 +1,4 @@
-package com.dysjsjy.gateway.provider;
+package com.dysjsjy.dubbo.provider;
 
 import java.util.concurrent.CompletableFuture;
 

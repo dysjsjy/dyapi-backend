@@ -1,12 +1,11 @@
 package com.dysjsjy.gateway;
 
-import com.alibaba.nacos.api.naming.pojo.healthcheck.impl.Http;
 import com.dysjsjy.clientsdk.utils.SignUtils;
 import com.dysjsjy.common.model.entity.InterfaceInfo;
 import com.dysjsjy.common.model.entity.User;
-import com.dysjsjy.common.service.InnerInterfaceInfoService;
-import com.dysjsjy.common.service.InnerUserInterfaceInfoService;
-import com.dysjsjy.common.service.InnerUserService;
+import com.dysjsjy.dubbo.common.service.InnerInterfaceInfoService;
+import com.dysjsjy.dubbo.common.service.InnerUserInterfaceInfoService;
+import com.dysjsjy.dubbo.common.service.InnerUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.reactivestreams.Publisher;

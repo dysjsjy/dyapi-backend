@@ -2,7 +2,7 @@ package com.dysjsjy.project.service.impl.inner;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dysjsjy.common.model.entity.User;
-import com.dysjsjy.common.service.InnerUserService;
+import com.dysjsjy.dubbo.common.service.InnerUserService;
 import com.dysjsjy.project.common.ErrorCode;
 import com.dysjsjy.project.exception.BusinessException;
 import com.dysjsjy.project.mapper.UserMapper;

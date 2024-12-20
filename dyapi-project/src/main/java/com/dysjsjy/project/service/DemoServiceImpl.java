@@ -1,6 +1,6 @@
 package com.dysjsjy.project.service;
 
-import com.dysjsjy.project.provider.DemoService;
+import com.dysjsjy.dubbo.provider.DemoService;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.rpc.RpcContext;
 

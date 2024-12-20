@@ -1,6 +1,6 @@
 package com.dysjsjy.gateway;
 
-import com.dysjsjy.gateway.provider.DemoService;
+import com.dysjsjy.dubbo.provider.DemoService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;

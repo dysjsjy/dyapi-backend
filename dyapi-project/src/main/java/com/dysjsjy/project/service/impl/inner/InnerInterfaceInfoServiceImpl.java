@@ -3,7 +3,7 @@ package com.dysjsjy.project.service.impl.inner;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dysjsjy.common.model.entity.InterfaceInfo;
-import com.dysjsjy.common.service.InnerInterfaceInfoService;
+import com.dysjsjy.dubbo.common.service.InnerInterfaceInfoService;
 import com.dysjsjy.project.common.ErrorCode;
 import com.dysjsjy.project.exception.BusinessException;
 import com.dysjsjy.project.mapper.InterfaceInfoMapper;
