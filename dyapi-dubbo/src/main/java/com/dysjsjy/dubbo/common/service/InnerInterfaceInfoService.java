@@ -1,4 +1,4 @@
-package com.dysjsjy.common.service;
+package com.dysjsjy.dubbo.common.service;
 
 import com.dysjsjy.common.model.entity.InterfaceInfo;
 
