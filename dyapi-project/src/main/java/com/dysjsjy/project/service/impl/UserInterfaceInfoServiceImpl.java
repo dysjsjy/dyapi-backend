@@ -1,5 +1,6 @@
 package com.dysjsjy.project.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dysjsjy.common.model.entity.UserInterfaceInfo;
 import com.dysjsjy.project.common.ErrorCode;
@@ -33,6 +34,20 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
         }
     }
 
+    @Override
+    public boolean invokeCount(long interfaceInfoId, long userId) {
+        // 判断
+        if (interfaceInfoId <= 0 || userId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        UpdateWrapper<UserInterfaceInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("interfaceInfoId", interfaceInfoId);
+        updateWrapper.eq("userId", userId);
+
+//        updateWrapper.gt("leftNum", 0);
+        updateWrapper.setSql("leftNum = leftNum - 1, totalNum = totalNum + 1");
+        return this.update(updateWrapper);
+    }
 
 }
 
