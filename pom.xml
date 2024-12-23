@@ -20,6 +20,7 @@
         <module>dyapi-client-sdk</module>
         <module>dyapi-gateway</module>
         <module>dyapi-dubbo</module>
+        <module>dyapi-interface</module>
     </modules>
 
     <properties>

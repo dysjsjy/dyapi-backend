@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: dyapi-interface
+server:
+  port: 8123
+  servlet:
+    context-path: /api/service
+dyapi:
+  client:
+    access-key: dyapi
+    secret-key: abcdefgh

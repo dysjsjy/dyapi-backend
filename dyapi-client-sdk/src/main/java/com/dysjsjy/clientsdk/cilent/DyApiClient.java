@@ -6,6 +6,8 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.dysjsjy.clientsdk.model.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,6 +61,16 @@ public class DyApiClient {
                 .execute();
         System.out.println(httpResponse.getStatus());
         String result = httpResponse.body();
+        System.out.println(result);
+        return result;
+    }
+
+    public Object loveQuotesRandom() {
+        HttpResponse httpRequest = HttpRequest.get("http://localhost:7529/api/loveQuotes/random")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpRequest.getStatus());
+        String result = httpRequest.body();
         System.out.println(result);
         return result;
     }
