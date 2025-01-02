@@ -12,7 +12,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 import java.util.UUID;
 
 @Aspect
@@ -38,6 +37,7 @@ public class LogInterceptor {
                 httpServletRequest.getRemoteHost(), reqParam);
 
         Object result = point.proceed();
+        stopWatch.stop();
         long totalTimeMillis = stopWatch.getLastTaskTimeMillis();
         log.info("request end, id: {}, cost: {}ms", requestId, totalTimeMillis);
         return result;
